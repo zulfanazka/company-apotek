@@ -3,22 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Location; // Tambahkan ini untuk mengakses tabel locations
+use App\Models\Location;
 
 class ContactController extends Controller
 {
-    // Tampilkan halaman gabungan company profile + map
+    // Menampilkan halaman contact dengan peta dan data lokasi
     public function index()
     {
-        $locations = Location::all(); // Ambil semua data lokasi dari tabel
-        return view('contact', compact('locations')); // Ganti view jika kamu memakai nama lain
+        $locations = Location::all();
+        return view('contact', compact('locations'));
     }
 
+    // Form tambah lokasi (opsional, tidak dipakai langsung dalam blade contact)
     public function create()
     {
-        return view('locations.create');
+        $locations = Location::all();  // Ambil data lokasi semua
+        return view('locations.create', compact('locations')); // Kirim ke view
     }
 
+    // Menyimpan data lokasi baru dari form
     public function store(Request $request)
     {
         $request->validate([
@@ -28,15 +31,16 @@ class ContactController extends Controller
         ]);
 
         Location::create($request->all());
-        return redirect()->route('locations.index')
-            ->with('success', 'Location created successfully.');
+        return redirect()->route('contact')->with('success', 'Lokasi berhasil ditambahkan.');
     }
 
+    // Menampilkan form edit lokasi
     public function edit(Location $location)
     {
         return view('locations.edit', compact('location'));
     }
 
+    // Menyimpan pembaruan data lokasi
     public function update(Request $request, Location $location)
     {
         $request->validate([
@@ -46,14 +50,13 @@ class ContactController extends Controller
         ]);
 
         $location->update($request->all());
-        return redirect()->route('locations.index')
-            ->with('success', 'Location updated successfully.');
+        return redirect()->route('contact')->with('success', 'Lokasi berhasil diperbarui.');
     }
 
+    // Menghapus data lokasi
     public function destroy(Location $location)
     {
         $location->delete();
-        return redirect()->route('locations.index')
-            ->with('success', 'Location deleted successfully.');
+        return redirect()->route('contact')->with('success', 'Lokasi berhasil dihapus.');
     }
 }
