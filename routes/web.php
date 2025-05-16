@@ -15,3 +15,4 @@ Route::get('/profiles', [ProfileController::class, 'index'])->name('profiles');
 Route::get('/product', [ProductController::class, 'index'])->name('product');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 
+// Route::resource('locations', LocationController::class);
