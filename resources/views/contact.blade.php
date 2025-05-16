@@ -4,10 +4,12 @@
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
 <section class="bg-white py-12 px-4">
-    <h2 class="text-3xl font-bold text-center text-blue-600 mb-10">Hubungi Kami</h2>
+    <h2 class="text-3xl font-bold text-center text-blue-600 mb-10">Lokasi Kami</h2>
 
     {{-- Leaflet Map --}}
     <div id="map" class="max-w-5xl mx-auto h-[400px] rounded-lg shadow-md z-10"></div>
+
+
 
     {{-- Form Tambah Lokasi --}}
     {{-- <form action="{{ route('locations.store') }}" method="POST" style="margin-bottom: 20px;">
@@ -35,6 +37,8 @@
 
     {{-- tambah peta --}}
     {{-- <a href="{{ route('locations.create') }}">tambah peta</a> --}}
+
+
     <div class="max-w-5xl mx-auto my-6 flex justify-end">
         <a href="{{ route('locations.create') }}"
             class="inline-flex items-center px-5 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
@@ -45,6 +49,9 @@
             Tambah Peta
         </a>
     </div>
+
+    </br>
+    <h2 class="text-3xl font-bold text-center text-blue-600 mb-10">Hubungi Kami</h2>
 
 
 
