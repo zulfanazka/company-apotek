@@ -24,3 +24,5 @@ Route::post('/locations', [ContactController::class, 'store'])->name('locations.
 Route::get('/locations/{location}/edit', [ContactController::class, 'edit'])->name('locations.edit');
 Route::put('/locations/{location}', [ContactController::class, 'update'])->name('locations.update');
 Route::delete('/locations/{location}', [ContactController::class, 'destroy'])->name('locations.destroy');
+
+Route::get('dashboard/index', [DashboardController::class, 'index'])->name('dashboard');
