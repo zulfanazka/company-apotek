@@ -10,6 +10,10 @@ use App\Http\Controllers\InventoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\AdWelcomeController;
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +25,9 @@ use App\Http\Controllers\ProductController;
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+Route::get('/adwelcome', function () {
+    return view('ad_profile.adwelcome');
+})->name('adwelcome');
 
 // Login dan Authentication
 Route::get('login', [LoginController::class, 'login'])->name('login');
@@ -76,3 +83,9 @@ Route::post('/locations', [ContactController::class, 'store'])->name('locations.
 Route::get('/locations/{location}/edit', [ContactController::class, 'edit'])->name('locations.edit');
 Route::put('/locations/{location}', [ContactController::class, 'update'])->name('locations.update');
 Route::delete('/locations/{location}', [ContactController::class, 'destroy'])->name('locations.destroy');
+
+Route::get('/adwelcome', [AdWelcomeController::class, 'index'])->name('adwelcome');
+Route::post('/adwelcome', [AdWelcomeController::class, 'store'])->name('adwelcome.store');
+Route::get('/adwelcome/edit/{id}', [AdWelcomeController::class, 'edit'])->name('adwelcome.edit');
+Route::put('/adwelcome/{id}', [AdWelcomeController::class, 'update'])->name('adwelcome.update');
+Route::delete('/adwelcome/{id}', [AdWelcomeController::class, 'destroy'])->name('adwelcome.destroy');
