@@ -7,50 +7,57 @@ use Illuminate\Http\Request;
 
 class AdWelcomeController extends Controller
 {
-    // Menampilkan halaman dengan card yang ada
-    public function index()
+    // Menampilkan daftar card dengan pagination dan pencarian
+    public function index(Request $request)
     {
-        $cards = Card::all(); // Ambil semua card
+        $query = Card::query();
+
+        if ($request->has('search') && $request->search != '') {
+            $query->where(function($q) use ($request) {
+                $q->where('title', 'like', '%' . $request->search . '%')
+                  ->orWhere('text', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        $cards = $query->orderBy('id')->paginate(10);
+
         return view('ad_profile.adwelcome', compact('cards'));
     }
 
-    // Menambah card baru
-public function store(Request $request)
-{
-    $validated = $request->validate([
-        'title' => 'required|string',
-        'text' => 'required|string',
-        'layout' => 'required|in:text-left,text-right,text-only,image-only',
-        'image' => 'nullable|image|max:1024',
-    ]);
-
-    if ($request->hasFile('image')) {
-        $validated['image'] = $request->file('image')->store('images');
-        $imageUrl = asset('storage/' . $validated['image']);
-    } else {
-        $imageUrl = null;
+    // Tampilkan form tambah card baru
+    public function create()
+    {
+        return view('ad_profile.newcard');  // Pastikan blade ini sudah ada
     }
 
-    $card = Card::create($validated);
+    // Simpan data card baru
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string',
+            'text' => 'required|string',
+            'layout' => 'required|in:text-left,text-right,text-only,image-only',
+            'image' => 'nullable|image|max:1024',  // max 1MB
+        ]);
 
-    return response()->json([
-        'id' => $card->id,
-        'title' => $card->title,
-        'text' => $card->text,
-        'layout' => $card->layout,
-        'image_url' => $imageUrl,
-    ]);
-}
+        if ($request->hasFile('image')) {
+            // Simpan file ke storage/app/public/images
+            $validated['image'] = $request->file('image')->store('images', 'public');
+        }
 
+        Card::create($validated);
 
-    // Edit card
+        return redirect()->route('adwelcome.index')->with('success', 'Card berhasil ditambahkan!');
+    }
+
+    // Tampilkan form edit card
     public function edit($id)
     {
         $card = Card::findOrFail($id);
-        return response()->json($card);
+        return view('ad_profile.edit_card', compact('card')); // buat blade edit_card
     }
 
-    // Update card
+    // Update data card
     public function update(Request $request, $id)
     {
         $card = Card::findOrFail($id);
@@ -63,12 +70,12 @@ public function store(Request $request)
         ]);
 
         if ($request->hasFile('image')) {
-            $validated['image'] = $request->file('image')->store('images');
+            $validated['image'] = $request->file('image')->store('images', 'public');
         }
 
         $card->update($validated);
 
-        return redirect()->route('adwelcome');
+        return redirect()->route('adwelcome.index')->with('success', 'Card berhasil diperbarui!');
     }
 
     // Hapus card
@@ -76,6 +83,7 @@ public function store(Request $request)
     {
         $card = Card::findOrFail($id);
         $card->delete();
-        return redirect()->route('adwelcome');
+
+        return redirect()->route('adwelcome.index')->with('success', 'Card berhasil dihapus!');
     }
 }

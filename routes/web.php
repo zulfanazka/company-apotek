@@ -86,6 +86,7 @@ Route::delete('/locations/{location}', [ContactController::class, 'destroy'])->n
 
 Route::get('/adwelcome', [AdWelcomeController::class, 'index'])->name('adwelcome');
 Route::post('/adwelcome', [AdWelcomeController::class, 'store'])->name('adwelcome.store');
+Route::get('/adwelcome/create', [AdWelcomeController::class, 'create'])->name('adwelcome.create');
 Route::get('/adwelcome/edit/{id}', [AdWelcomeController::class, 'edit'])->name('adwelcome.edit');
 Route::put('/adwelcome/{id}', [AdWelcomeController::class, 'update'])->name('adwelcome.update');
 Route::delete('/adwelcome/{id}', [AdWelcomeController::class, 'destroy'])->name('adwelcome.destroy');
