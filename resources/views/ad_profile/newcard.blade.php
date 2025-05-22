@@ -6,7 +6,7 @@
             background: white;
             padding: 20px;
             border-radius: 10px;
-            margin: 0px 20px;
+            margin: 0 20px;
             max-width: 700px;
         }
 
@@ -30,12 +30,12 @@
 
         <p class="text-muted">*Semua field wajib diisi kecuali ada keterangan</p>
 
-        <form action="{{ route('adwelcome.store') }}" method="POST">
+        <form action="{{ route('adwelcome.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="mb-3">
-                <label for="title" class="form-label">Title (boleh menggunakan &lt;br&gt; untuk line break)</label>
-                <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}" required>
+                <label for="title" class="form-label">Title (boleh pakai &lt;br&gt; untuk line break)</label>
+                <input type="text" id="title" name="title" class="form-control" value="{{ old('title') }}" required>
                 @error('title')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
@@ -43,7 +43,7 @@
 
             <div class="mb-3">
                 <label for="text" class="form-label">Text</label>
-                <textarea class="form-control" id="text" name="text" rows="4" required>{{ old('text') }}</textarea>
+                <textarea id="text" name="text" class="form-control" rows="4" required>{{ old('text') }}</textarea>
                 @error('text')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror
@@ -51,10 +51,12 @@
 
             <div class="mb-3">
                 <label for="layout" class="form-label">Layout</label>
-                <select class="form-select" id="layout" name="layout" required>
+                <select id="layout" name="layout" class="form-select" required>
                     <option value="" hidden>- Pilih Layout -</option>
                     <option value="text-left" {{ old('layout') == 'text-left' ? 'selected' : '' }}>Text Left</option>
                     <option value="text-right" {{ old('layout') == 'text-right' ? 'selected' : '' }}>Text Right</option>
+                    <option value="text-only" {{ old('layout') == 'text-only' ? 'selected' : '' }}>Text Only</option>
+                    <option value="image-only" {{ old('layout') == 'image-only' ? 'selected' : '' }}>Image Only</option>
                 </select>
                 @error('layout')
                     <small class="text-danger">{{ $message }}</small>
@@ -62,8 +64,8 @@
             </div>
 
             <div class="mb-3">
-                <label for="image" class="form-label">Image Path (relative dari folder public, contoh: img/obat.png)</label>
-                <input type="text" class="form-control" id="image" name="image" value="{{ old('image') }}" required>
+                <label for="image" class="form-label">Upload Gambar (jpg, png max 1MB)</label>
+                <input type="file" id="image" name="image" class="form-control" accept="image/*" required>
                 @error('image')
                     <small class="text-danger">{{ $message }}</small>
                 @enderror

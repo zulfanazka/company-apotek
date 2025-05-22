@@ -28,7 +28,7 @@
                 <div class="dropdown-divider"></div>
                 {{-- <a class="dropdown-item" href="login.html">Logout</a> --}}
                 {{-- LOGOUT --}}
-                <form action="{{ route('logoutaction') }}" method="POST">
+                <form action="{{ route('home') }}" method="POST">
                     @csrf
                     <button type="submit" class="dropdown-item">Logout</button>
                 </form>
