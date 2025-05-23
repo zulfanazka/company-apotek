@@ -9,5 +9,7 @@ class Card extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'text', 'image', 'layout'];
+protected $fillable = ['title', 'text', 'image', 'layout', 'text_align', 'position'];
+
+
 }

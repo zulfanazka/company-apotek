@@ -58,3 +58,4 @@ Route::get('/adwelcome/create', [AdWelcomeController::class, 'create'])->name('a
 Route::get('/adwelcome/edit/{id}', [AdWelcomeController::class, 'edit'])->name('adwelcome.edit');
 Route::put('/adwelcome/{id}', [AdWelcomeController::class, 'update'])->name('adwelcome.update');
 Route::delete('/adwelcome/{id}', [AdWelcomeController::class, 'destroy'])->name('adwelcome.destroy');
+Route::resource('adwelcome', AdWelcomeController::class);
