@@ -42,7 +42,8 @@ $validated = $request->validate([
     'layout' => 'required|in:text-left,text-right,text-only,image-only',
     'text_align' => 'required|in:left,center,right,justify',
     'image' => 'nullable|image|max:1024',
-    'after_id' => 'nullable|integer|exists:cards,id', // opsional untuk posisi
+    'after_id' => 'nullable|integer|exists:cards,id',
+    'fit_mode' => 'required|in:cover,contain,original',
 ]);
 
 
@@ -92,6 +93,7 @@ $validated = $request->validate([
             'layout' => 'required|in:text-left,text-right,text-only,image-only',
             'image' => 'nullable|image|max:1024',
             'text_align' => 'required|in:left,center,right,justify',
+            'fit_mode' => 'required|in:cover,contain,original',
 
         ]);
 

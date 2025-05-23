@@ -93,6 +93,19 @@
                 <small class="text-danger">{{ $message }}</small>
             @enderror
         </div>
+        <div class="mb-3">
+    <label for="fit_mode" class="form-label">Fit Mode Gambar</label>
+<select id="fit_mode" name="fit_mode" class="form-select" required>
+    <option value="cover" {{ old('fit_mode', isset($card) ? $card->fit_mode : 'cover') == 'cover' ? 'selected' : '' }}>Cover</option>
+    <option value="contain" {{ old('fit_mode', isset($card) ? $card->fit_mode : 'cover') == 'contain' ? 'selected' : '' }}>Contain</option>
+    <option value="original" {{ old('fit_mode', isset($card) ? $card->fit_mode : 'cover') == 'original' ? 'selected' : '' }}>Original</option>
+</select>
+
+    @error('fit_mode')
+        <small class="text-danger">{{ $message }}</small>
+    @enderror
+</div>
+
 
         <div class="mb-3">
             <label for="image" class="form-label">
@@ -119,8 +132,9 @@
         <div class="text-end">
             <a href="{{ route('adwelcome.index') }}" class="btn btn-secondary">Batal</a>
             <button type="submit" class="btn btn-success">{{ isset($card) ? 'Update Card' : 'Simpan Card' }}</button>
+            <input type="hidden" name="after_id" value="{{ $afterId ?? '' }}">
         </div>
-        <input type="hidden" name="after_id" value="{{ $afterId ?? '' }}">
+
 
     </form>
 </div>

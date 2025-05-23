@@ -62,7 +62,10 @@
     :title="$card->title"
     :text="$card->text"
     :image="$card->image ? asset('storage/' . $card->image) : null"
+    :fitMode="$card->fit_mode ?? 'contain'"  {{-- Pastikan ini ada --}}
 />
+
+
 
 
                 <div class="flex justify-between mt-4 px-2">
@@ -75,7 +78,7 @@
                         Edit
                     </a>
 
-                    <form action="{{ route('adwelcome.destroy', $card->id) }}" method="POST" onsubmit="return confirm('Yakin ingin hapus card ini?')" class="inline-block">
+                    <form action="{{ route('adwelcome.destroy', $card->id) }}" method="POST" onsubmit="return confirm('Konfirmasi Penghapusan card ini?')" class="inline-block">
                         @csrf
                         @method('DELETE')
                         <button type="submit"

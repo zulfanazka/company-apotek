@@ -16,6 +16,8 @@ return new class extends Migration
             $table->enum('layout', ['text-left', 'text-right', 'text-only', 'image-only'])->default('text-left');
             $table->enum('text_align', ['left', 'center', 'right', 'justify'])->default('left');
             $table->integer('position')->default(0);
+            $table->enum('fit_mode', ['cover', 'contain', 'original'])->default('cover');
+
             $table->timestamps();
         });
     }
