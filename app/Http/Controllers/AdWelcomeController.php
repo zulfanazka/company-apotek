@@ -36,16 +36,15 @@ public function create(Request $request)
 
     public function store(Request $request)
 {
-$validated = $request->validate([
-    'title' => 'required|string',
-    'text' => 'required|string',
-    'layout' => 'required|in:text-left,text-right,text-only,image-only',
-    'text_align' => 'required|in:left,center,right,justify',
-    'image' => 'nullable|image|max:1024',
-    'after_id' => 'nullable|integer|exists:cards,id',
-    'fit_mode' => 'required|in:cover,contain,original',
-]);
-
+    $validated = $request->validate([
+        'title' => 'required|string',
+        'text' => 'required|string',
+        'layout' => 'required|in:text-left,text-right,text-only,image-only',
+        'text_align' => 'required|in:left,center,right,justify',
+        'image' => 'nullable|image|max:1024',
+        'after_id' => 'nullable|integer|exists:cards,id',
+        'fit_mode' => 'required|in:cover,contain,original',
+    ]);
 
     $afterId = $request->input('after_id');
     $position = 0;
@@ -54,11 +53,9 @@ $validated = $request->validate([
         $afterCard = Card::find($afterId);
         if ($afterCard) {
             $position = $afterCard->position + 1;
-            // Geser posisi card lain
             Card::where('position', '>=', $position)->increment('position');
         }
     } else {
-        // Kalau tidak ada afterId, bisa letakkan paling bawah
         $maxPosition = Card::max('position');
         $position = $maxPosition ? $maxPosition + 1 : 1;
     }
@@ -75,6 +72,8 @@ $validated = $request->validate([
 }
 
 
+
+
     // Tampilkan form edit card
     public function edit($id)
     {
@@ -83,35 +82,32 @@ $validated = $request->validate([
     }
 
     // Update data card
-    public function update(Request $request, $id)
-    {
-        $card = Card::findOrFail($id);
+public function update(Request $request, $id)
+{
+    $card = Card::findOrFail($id);
 
-        $validated = $request->validate([
-            'title' => 'required|string',
-            'text' => 'required|string',
-            'layout' => 'required|in:text-left,text-right,text-only,image-only',
-            'image' => 'nullable|image|max:1024',
-            'text_align' => 'required|in:left,center,right,justify',
-            'fit_mode' => 'required|in:cover,contain,original',
+    $validated = $request->validate([
+        'title' => 'required|string',
+        'text' => 'required|string',
+        'layout' => 'required|in:text-left,text-right,text-only,image-only',
+        'image' => 'nullable|image|max:1024',
+        'text_align' => 'required|in:left,center,right,justify',
+        'fit_mode' => 'required|in:cover,contain,original',
+    ]);
 
-        ]);
-
-        // Upload gambar baru jika ada, dan hapus gambar lama jika ada
-        if ($request->hasFile('image')) {
-            if ($card->image && Storage::disk('public')->exists($card->image)) {
-                Storage::disk('public')->delete($card->image);
-            }
-            $validated['image'] = $request->file('image')->store('images', 'public');
-        } else {
-            // Jika tidak upload gambar baru, biarkan path gambar lama tetap
-            $validated['image'] = $card->image;
+    if ($request->hasFile('image')) {
+        if ($card->image && Storage::disk('public')->exists($card->image)) {
+            Storage::disk('public')->delete($card->image);
         }
-
-        $card->update($validated);
-
-        return redirect()->route('adwelcome.index')->with('success', 'Card berhasil diperbarui!');
+        $validated['image'] = $request->file('image')->store('images', 'public');
+    } else {
+        $validated['image'] = $card->image;
     }
+
+    $card->update($validated);
+
+    return redirect()->route('adwelcome.index')->with('success', 'Card berhasil diperbarui!');
+}
 
     // Hapus card beserta gambar terkait
     public function destroy($id)

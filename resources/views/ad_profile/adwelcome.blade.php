@@ -29,9 +29,10 @@
                     </a>
 
                     <div class="mt-6">
-<a href="{{ route('adwelcome.create', ['after' => $firstCard->id]) }}" class="inline-block bg-green-600 text-white px-6 py-3 rounded-md shadow hover:bg-green-700 transition duration-300">
-    Tambah Card
-</a>
+                        <a href="{{ route('adwelcome.create', ['after' => $firstCard->id]) }}" 
+                           class="inline-block bg-green-600 text-white px-6 py-3 rounded-md shadow hover:bg-green-700 transition duration-300">
+                            Tambah Card
+                        </a>
 
                         <a href="{{ route('adwelcome.edit', $firstCard->id) }}"
                             class="inline-block bg-blue-600 text-white px-6 py-3 rounded-md shadow hover:bg-blue-700 transition duration-300">
@@ -56,29 +57,28 @@
         @foreach ($otherCards as $card)
             <div id="card-{{ $card->id }}" class="border p-6 rounded-lg shadow-md flex flex-col space-y-4">
 
-<x-card-section
-    :layout="$card->layout"
-    :textAlign="$card->text_align ?? 'left'"
-    :title="$card->title"
-    :text="$card->text"
-    :image="$card->image ? asset('storage/' . $card->image) : null"
-    :fitMode="$card->fit_mode ?? 'contain'"  {{-- Pastikan ini ada --}}
-/>
-
-
-
+                <x-card-section
+                    :layout="$card->layout"
+                    :textAlign="$card->text_align ?? 'left'"
+                    :title="$card->title"
+                    :text="$card->text"
+                    :image="$card->image ? asset('storage/' . $card->image) : null"
+                    :fitMode="$card->fit_mode ?? 'contain'"
+                />
 
                 <div class="flex justify-between mt-4 px-2">
-<a href="{{ route('adwelcome.create', ['after' => $card->id]) }}" class="inline-block bg-green-600 text-white px-6 py-3 rounded-md shadow hover:bg-green-700 transition duration-300">
-    Tambah Card
-</a>
+                    <a href="{{ route('adwelcome.create', ['after' => $card->id]) }}" 
+                       class="inline-block bg-green-600 text-white px-6 py-3 rounded-md shadow hover:bg-green-700 transition duration-300">
+                        Tambah Card
+                    </a>
 
                     <a href="{{ route('adwelcome.edit', $card->id) }}"
                        class="inline-block bg-blue-600 text-white px-6 py-3 rounded-md shadow hover:bg-blue-700 transition duration-300">
                         Edit
                     </a>
 
-                    <form action="{{ route('adwelcome.destroy', $card->id) }}" method="POST" onsubmit="return confirm('Konfirmasi Penghapusan card ini?')" class="inline-block">
+                    <form action="{{ route('adwelcome.destroy', $card->id) }}" method="POST" 
+                          onsubmit="return confirm('Konfirmasi Penghapusan card ini?')" class="inline-block">
                         @csrf
                         @method('DELETE')
                         <button type="submit"
