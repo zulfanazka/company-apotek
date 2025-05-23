@@ -1,71 +1,130 @@
 @include('layout.header')
+
 <body>
-    <section class="bg-white py-16 px-6">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-10">
-            <!-- Text Section -->
-            <div class="md:w-1/2">
-                <h1 class="text-5xl font-bold text-blue-700 leading-tight mb-6">
-                    Berikan yang<br />
-                    Terbaik untuk<br />
-                    Kesehatan Anda
-                </h1>
-                <p class="text-gray-600 mb-6">
-                    Apotek Kami adalah tujuan utama Anda untuk kesehatan yang lebih baik. Kami menyediakan berbagai
-                    macam obat-obatan dan produk kesehatan dengan harga terjangkau dan layanan yang ramah.
-                </p>
-                <a href="{{ route('profiles') }}"
-                    class="inline-block bg-blue-600 text-white px-6 py-3 rounded-md shadow hover:bg-blue-700 transition duration-300">
-                    About us
-                </a>
-            </div>
+    <div class="container mx-auto py-12 space-y-12">
 
-            <!-- Image Section -->
-            <div class="md:w-1/2">
-                <img src="img/klinik.png" alt="Apotek" class="rounded-xl shadow-lg w-full object-cover" />
-            </div>
-        </div>
-    </section>
-    <section class="bg-white py-16 px-6">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-10">
-            <!-- Image Section -->
-            <div class="md:w-1/2">
-                <img src="img/obat.png" alt="Produk Obat" class="rounded-xl shadow-lg w-full object-cover" />
-            </div>
+        @php
+            $firstCard = $cards->first();
+            $otherCards = $cards->skip(1);
+        @endphp
 
-            <!-- Text Section -->
-            <div class="md:w-1/2">
-                <h2 class="text-5xl font-bold text-blue-700 leading-tight mb-4">
-                    Solusi kesehatan<br />lengkap,dari kami<br />untuk Anda
-                </h2>
-                <p class="text-gray-600 mb-6">
-                    Apotek kami menyediakan obat lengkap untuk segala kebutuhan kesehatan Anda
-                </p>
-                <hr class="mb-6 border-gray-200" />
-                <ul class="space-y-4 text-gray-800">
-                    <li class="flex items-center gap-3">
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="2"
-                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                        Generik
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="2"
-                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                        OTC & Herbal
-                    </li>
-                    <li class="flex items-center gap-3">
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" stroke-width="2"
-                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                        Etikal
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </section>
+        {{-- Tampilkan kartu pertama dengan tombol About Us --}}
+        @if($firstCard)
+            <section class="py-12 px-6">
+                <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-10">
+
+                    @php
+                        $isTextLeft = ($firstCard->layout === 'text-left' || $firstCard->layout === 'text-only');
+                        $isTextRight = ($firstCard->layout === 'text-right');
+                        $isTextOnly = ($firstCard->layout === 'text-only');
+                        $isImageOnly = ($firstCard->layout === 'image-only');
+                    @endphp
+
+                    @if($isTextOnly)
+                        <div class="w-full text-{{ $firstCard->text_align }}">
+                            <h2 class="text-5xl font-bold text-blue-700 mb-6 leading-tight">{!! $firstCard->title !!}</h2>
+                            <p class="text-gray-600 whitespace-pre-line">{{ $firstCard->text }}</p>
+                            <a href="{{ route('profiles') }}" class="inline-block mt-6 bg-blue-600 text-white px-6 py-3 rounded-md shadow hover:bg-blue-700 transition duration-300">
+                                About Us
+                            </a>
+                        </div>
+
+                    @elseif($isImageOnly)
+                        <div class="w-full flex justify-center">
+                            <img src="{{ $firstCard->image ? asset('storage/' . $firstCard->image) : asset('img/placeholder.png') }}"
+                                 alt="Card Image"
+                                 class="max-w-full max-h-96 object-contain" />
+                        </div>
+
+                    @elseif($isTextRight)
+                        <div class="w-full md:w-1/2 flex justify-center">
+                            <img src="{{ $firstCard->image ? asset('storage/' . $firstCard->image) : asset('img/placeholder.png') }}"
+                                 alt="Card Image"
+                                 class="max-w-full max-h-96 object-contain rounded-lg" />
+                        </div>
+
+                        <div class="w-full md:w-1/2 text-{{ $firstCard->text_align }}">
+                            <h2 class="text-5xl font-bold text-blue-700 mb-6 leading-tight">{!! $firstCard->title !!}</h2>
+                            <p class="text-gray-600 whitespace-pre-line">{{ $firstCard->text }}</p>
+                            <a href="{{ route('profiles') }}" class="inline-block mt-6 bg-blue-600 text-white px-6 py-3 rounded-md shadow hover:bg-blue-700 transition duration-300">
+                                About Us
+                            </a>
+                        </div>
+
+                    @else {{-- text-left --}}
+                        <div class="w-full md:w-1/2 text-{{ $firstCard->text_align }}">
+                            <h2 class="text-5xl font-bold text-blue-700 mb-6 leading-tight">{!! $firstCard->title !!}</h2>
+                            <p class="text-gray-600 whitespace-pre-line">{{ $firstCard->text }}</p>
+                            <a href="{{ route('profiles') }}" class="inline-block mt-6 bg-blue-600 text-white px-6 py-3 rounded-md shadow hover:bg-blue-700 transition duration-300">
+                                About Us
+                            </a>
+                        </div>
+
+                        <div class="w-full md:w-1/2 flex justify-center">
+                            <img src="{{ $firstCard->image ? asset('storage/' . $firstCard->image) : asset('img/placeholder.png') }}"
+                                 alt="Card Image"
+                                 class="max-w-full max-h-96 object-contain rounded-lg" />
+                        </div>
+                    @endif
+
+                </div>
+            </section>
+        @endif
+
+        {{-- Loop kartu lainnya tanpa tombol About Us --}}
+        @foreach ($otherCards as $card)
+            <section class="py-12 px-6">
+                <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center gap-10">
+
+                    @php
+                        $isTextLeft = ($card->layout === 'text-left' || $card->layout === 'text-only');
+                        $isTextRight = ($card->layout === 'text-right');
+                        $isTextOnly = ($card->layout === 'text-only');
+                        $isImageOnly = ($card->layout === 'image-only');
+                    @endphp
+
+                    @if($isTextOnly)
+                        <div class="w-full text-{{ $card->text_align }}">
+                            <h2 class="text-5xl font-bold text-blue-700 mb-6 leading-tight">{!! $card->title !!}</h2>
+                            <p class="text-gray-600 whitespace-pre-line">{{ $card->text }}</p>
+                        </div>
+
+                    @elseif($isImageOnly)
+                        <div class="w-full flex justify-center">
+                            <img src="{{ $card->image ? asset('storage/' . $card->image) : asset('img/placeholder.png') }}"
+                                 alt="Card Image"
+                                 class="max-w-full max-h-96 object-contain" />
+                        </div>
+
+                    @elseif($isTextRight)
+                        <div class="w-full md:w-1/2 flex justify-center">
+                            <img src="{{ $card->image ? asset('storage/' . $card->image) : asset('img/placeholder.png') }}"
+                                 alt="Card Image"
+                                 class="max-w-full max-h-96 object-contain rounded-lg" />
+                        </div>
+
+                        <div class="w-full md:w-1/2 text-{{ $card->text_align }}">
+                            <h2 class="text-5xl font-bold text-blue-700 mb-6 leading-tight">{!! $card->title !!}</h2>
+                            <p class="text-gray-600 whitespace-pre-line">{{ $card->text }}</p>
+                        </div>
+
+                    @else
+                        <div class="w-full md:w-1/2 text-{{ $card->text_align }}">
+                            <h2 class="text-5xl font-bold text-blue-700 mb-6 leading-tight">{!! $card->title !!}</h2>
+                            <p class="text-gray-600 whitespace-pre-line">{{ $card->text }}</p>
+                        </div>
+
+                        <div class="w-full md:w-1/2 flex justify-center">
+                            <img src="{{ $card->image ? asset('storage/' . $card->image) : asset('img/placeholder.png') }}"
+                                 alt="Card Image"
+                                 class="max-w-full max-h-96 object-contain rounded-lg" />
+                        </div>
+                    @endif
+
+                </div>
+            </section>
+        @endforeach
+    </div>
 </body>
+
 @include('layout.footer')

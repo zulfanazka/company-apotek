@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\LoginController;
+use App\Http\Controllers\WelcomeController;use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MainController;
 
 
@@ -21,14 +21,18 @@ use App\Http\Controllers\AdWelcomeController;
 */
 
 // Halaman landing / welcome
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
-Route::get('/adwelcome', function () {
-    return view('ad_profile.adwelcome');
-})->name('adwelcome');
 
 
+Route::get('/', [WelcomeController::class, 'welcome'])->name('welcome');
+
+
+
+
+
+Route::get('/', [WelcomeController::class, 'welcome'])->name('home');
+
+// Resource route adwelcome, otomatis mendaftarkan semua route CRUD
+Route::resource('adwelcome', AdWelcomeController::class);
 
 // Main dashboard setelah login
 Route::get('main', [MainController::class, 'index'])->name('main')->middleware('auth');
@@ -59,3 +63,4 @@ Route::get('/adwelcome/edit/{id}', [AdWelcomeController::class, 'edit'])->name('
 Route::put('/adwelcome/{id}', [AdWelcomeController::class, 'update'])->name('adwelcome.update');
 Route::delete('/adwelcome/{id}', [AdWelcomeController::class, 'destroy'])->name('adwelcome.destroy');
 Route::resource('adwelcome', AdWelcomeController::class);
+
