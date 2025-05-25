@@ -19,12 +19,12 @@
     $fitClass = match($fitMode) {
         'cover' => 'object-cover',
         'contain' => 'object-contain',
-        'original' => '',
+        'original' => '', // no object-fit
         default => 'object-contain',
     };
 @endphp
 
-<div class="card flex flex-col md:flex-row items-start gap-6">
+<div class="card flex flex-col md:flex-row items-center gap-6">
 
     @if($layout === 'text-only')
         <div class="w-full {{ $textAlignClass }}">
@@ -36,39 +36,35 @@
 
     @elseif($layout === 'image-only')
         @if($image)
-            <div class="w-full flex justify-center" style="height: 300px; max-width: 100%;">
+            <div class="w-full flex justify-center" style="width: 100%; height: 400px; overflow: hidden;">
                 <img src="{{ $image }}" alt="Card Image" class="w-full h-full {{ $fitClass }} rounded-lg shadow-md" />
             </div>
         @endif
 
     @elseif($layout === 'text-right')
         @if($image)
-            <div class="w-full md:w-1/2 flex justify-center" style="height: 300px; max-width: 100%;">
+            <div class="w-full md:w-1/2 flex justify-center" style="width: 100%; height: 400px; overflow: hidden;">
                 <img src="{{ $image }}" alt="Card Image" class="w-full h-full {{ $fitClass }} rounded-lg shadow-md" />
             </div>
         @endif
 
-        <div class="w-full md:w-1/2 {{ $textAlignClass }} flex flex-col">
+        <div class="w-full md:w-1/2 {{ $textAlignClass }}">
             <h2 class="text-5xl font-bold mb-4 leading-tight text-blue-700">{!! $title !!}</h2>
             @if($text)
-                <div class="flex-grow flex items-center">
-                    <p class="text-gray-700 whitespace-pre-line">{{ $text }}</p>
-                </div>
+                <p class="text-gray-700 whitespace-pre-line">{{ $text }}</p>
             @endif
         </div>
 
     @else {{-- text-left --}}
-        <div class="w-full md:w-1/2 {{ $textAlignClass }} flex flex-col">
+        <div class="w-full md:w-1/2 {{ $textAlignClass }}">
             <h2 class="text-5xl font-bold mb-4 leading-tight text-blue-700">{!! $title !!}</h2>
             @if($text)
-                <div class="flex-grow flex items-center">
-                    <p class="text-gray-700 whitespace-pre-line">{{ $text }}</p>
-                </div>
+                <p class="text-gray-700 whitespace-pre-line">{{ $text }}</p>
             @endif
         </div>
 
         @if($image)
-            <div class="w-full md:w-1/2 flex justify-center" style="height: 300px; max-width: 100%;">
+            <div class="w-full md:w-1/2 flex justify-center" style="width: 100%; height: 400px; overflow: hidden;">
                 <img src="{{ $image }}" alt="Card Image" class="w-full h-full {{ $fitClass }} rounded-lg shadow-md" />
             </div>
         @endif
