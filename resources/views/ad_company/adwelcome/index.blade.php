@@ -24,18 +24,15 @@
             />
 
             <div class="mt-6 flex gap-4 justify-center md:justify-start">
-                <a href="{{ route('profiles') }}"
-                    class="inline-block bg-blue-600 text-white px-6 py-3 rounded-md shadow hover:bg-blue-700 transition duration-300">
-                    About us
-                </a>
-
                 <a href="{{ route('adwelcome.create', ['after' => $firstCard->id]) }}" 
-                   class="inline-block bg-green-600 text-white px-6 py-3 rounded-md shadow hover:bg-green-700 transition duration-300">
+                   class="bg-blue-600 hover:bg-blue-700 font-semibold px-6 py-3 rounded-md shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+                style="color: white !important;">
                     Tambah Card
                 </a>
 
                 <a href="{{ route('adwelcome.edit', $firstCard->id) }}"
-                    class="inline-block bg-blue-600 text-white px-6 py-3 rounded-md shadow hover:bg-blue-700 transition duration-300">
+                     class="bg-yellow-500 hover:bg-yellow-600 font-semibold px-6 py-3 rounded-md shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-50"
+                    style="color: white !important;">
                     Edit
                 </a>
             </div>
@@ -57,13 +54,15 @@
 
                 <div class="flex justify-between mt-4 px-2">
                     <a href="{{ route('adwelcome.create', ['after' => $card->id]) }}" 
-                       class="inline-block bg-green-600 text-white px-6 py-3 rounded-md shadow hover:bg-green-700 transition duration-300">
+                       class="bg-blue-600 hover:bg-blue-700 font-semibold px-6 py-3 rounded-md shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+                       style="color: white !important;">
                         Tambah Card
                     </a>
 
                     <a href="{{ route('adwelcome.edit', $card->id) }}"
-                       class="inline-block bg-blue-600 text-white px-6 py-3 rounded-md shadow hover:bg-blue-700 transition duration-300">
-                        Edit
+                        class="bg-yellow-500 hover:bg-yellow-600 font-semibold px-6 py-3 rounded-md shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-50"
+                    style="color: white !important;">
+                    Edit
                     </a>
 
                     <form action="{{ route('adwelcome.destroy', $card->id) }}" method="POST" 
@@ -71,7 +70,7 @@
                         @csrf
                         @method('DELETE')
                         <button type="submit"
-                            class="bg-red-600 text-white px-6 py-3 rounded-md shadow hover:bg-red-700 transition duration-300">
+                            class="bg-red-600 text-white px-6 py-3 rounded-md shadow hover:bg-red-700 transition duration-300" style="color: white !important;">
                             Hapus
                         </button>
                     </form>

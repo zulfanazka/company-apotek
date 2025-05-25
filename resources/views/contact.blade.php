@@ -91,11 +91,13 @@
         markers.push(marker.getLatLng());
     @endforeach
 
-    if (markers.length > 0) {
-        map.fitBounds(markers);
-    } else {
-        map.setView([0, 0], 2);
-    }
+if (markers.length > 0) {
+    map.fitBounds(markers);
+} else {
+    // Default ke Yogyakarta
+    map.setView([-7.7956, 110.3695], 12);
+}
+
 </script>
 
 @include('layout.footer')

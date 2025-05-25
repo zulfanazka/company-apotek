@@ -24,7 +24,7 @@
 
             <div class="mt-6 flex flex-wrap gap-4 justify-center md:justify-start">
                 <a href="{{ route('adprofile.create', ['after' => $firstCard->id]) }}" 
-                   class="bg-blue-600 hover:bg-blue-700 font-semibold px-6 py-3 rounded-md shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+                class="bg-blue-600 hover:bg-blue-700 font-semibold px-6 py-3 rounded-md shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
                 style="color: white !important;">
                     Tambah Card
                 </a>
@@ -53,12 +53,14 @@
 
                 <div class="flex flex-wrap gap-4 mt-4 px-2 justify-center md:justify-between">
                     <a href="{{ route('adprofile.create', ['after' => $card->id]) }}" 
-                       class="inline-block bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-md shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
-                        Tambah Card
-                    </a>
+                class="bg-blue-600 hover:bg-blue-700 font-semibold px-6 py-3 rounded-md shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-50"
+                style="color: white !important;">
+                    Tambah Card
+                </a>
 
                     <a href="{{ route('adprofile.edit', $card->id) }}"
-                       class="inline-block bg-yellow-500 hover:bg-yellow-600 text-white font-semibold px-6 py-3 rounded-md shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-50">
+                        class="bg-yellow-500 hover:bg-yellow-600 font-semibold px-6 py-3 rounded-md shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-50"
+                    style="color: white !important;">
                         Edit
                     </a>
 
@@ -67,7 +69,7 @@
                         @csrf
                         @method('DELETE')
                         <button type="submit"
-                            class="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-3 rounded-md shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+                            class="bg-red-600 hover:bg-red-700 text-white font-semibold px-6 py-3 rounded-md shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50" style="color: white !important;">
                             Hapus
                         </button>
                     </form>
