@@ -12,8 +12,8 @@ class AdProfileController extends Controller
     {
         $query = CardProfile::query();
 
-        if ($request->has('search') && $request->search != '') {
-            $query->where(function($q) use ($request) {
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
                 $q->where('title', 'like', '%' . $request->search . '%')
                   ->orWhere('text', 'like', '%' . $request->search . '%');
             });
@@ -21,13 +21,13 @@ class AdProfileController extends Controller
 
         $cards = $query->orderBy('position')->paginate(10);
 
-        return view('ad_profile.index', compact('cards'));
+        return view('ad_company.adprofile.index', compact('cards'));
     }
 
     public function create(Request $request)
     {
         $afterId = $request->query('after');
-        return view('ad_profile.newcard', compact('afterId'));
+        return view('ad_company.adprofile.newcard', compact('afterId'));
     }
 
     public function store(Request $request)
@@ -70,7 +70,7 @@ class AdProfileController extends Controller
     public function edit($id)
     {
         $card = CardProfile::findOrFail($id);
-        return view('ad_profile.newcard', compact('card'));
+        return view('ad_company.adprofile.newcard', compact('card'));
     }
 
     public function update(Request $request, $id)

@@ -4,7 +4,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\Card;
 
-class AboutUsSeeder extends Seeder
+class WelcomeSeeder extends Seeder
 {
     public function run()
     {

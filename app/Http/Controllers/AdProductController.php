@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CardProfile;
+use App\Models\CardProduct;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class AdProfileController extends Controller
+class AdProductController extends Controller
 {
     public function index(Request $request)
     {
-        $query = CardProfile::query();
+        $query = CardProduct::query();
 
-        if ($request->has('search') && $request->search != '') {
-            $query->where(function($q) use ($request) {
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
                 $q->where('title', 'like', '%' . $request->search . '%')
                   ->orWhere('text', 'like', '%' . $request->search . '%');
             });
@@ -21,13 +21,13 @@ class AdProfileController extends Controller
 
         $cards = $query->orderBy('position')->paginate(10);
 
-        return view('ad_profile.index', compact('cards'));
+        return view('ad_company.adproduct.index', compact('cards'));
     }
 
     public function create(Request $request)
     {
         $afterId = $request->query('after');
-        return view('ad_profile.newcard', compact('afterId'));
+        return view('ad_company.adproduct.newcard', compact('afterId'));
     }
 
     public function store(Request $request)
@@ -38,7 +38,7 @@ class AdProfileController extends Controller
             'layout' => 'required|in:text-left,text-right,text-only,image-only',
             'text_align' => 'required|in:left,center,right,justify',
             'image' => 'nullable|image|max:1024',
-            'after_id' => 'nullable|integer|exists:card_profile,id',
+            'after_id' => 'nullable|integer|exists:card_product,id',
             'fit_mode' => 'required|in:cover,contain,original',
         ]);
 
@@ -46,13 +46,13 @@ class AdProfileController extends Controller
         $position = 0;
 
         if ($afterId) {
-            $afterCard = CardProfile::find($afterId);
+            $afterCard = CardProduct::find($afterId);
             if ($afterCard) {
                 $position = $afterCard->position + 1;
-                CardProfile::where('position', '>=', $position)->increment('position');
+                CardProduct::where('position', '>=', $position)->increment('position');
             }
         } else {
-            $maxPosition = CardProfile::max('position');
+            $maxPosition = CardProduct::max('position');
             $position = $maxPosition ? $maxPosition + 1 : 1;
         }
 
@@ -62,20 +62,20 @@ class AdProfileController extends Controller
             $validated['image'] = $request->file('image')->store('images', 'public');
         }
 
-        CardProfile::create($validated);
+        CardProduct::create($validated);
 
-        return redirect()->route('adprofile.index')->with('success', 'Card berhasil ditambahkan!');
+        return redirect()->route('adproduct.index')->with('success', 'Card berhasil ditambahkan!');
     }
 
     public function edit($id)
     {
-        $card = CardProfile::findOrFail($id);
-        return view('ad_profile.newcard', compact('card'));
+        $card = CardProduct::findOrFail($id);
+        return view('ad_company.adproduct.newcard', compact('card'));
     }
 
     public function update(Request $request, $id)
     {
-        $card = CardProfile::findOrFail($id);
+        $card = CardProduct::findOrFail($id);
 
         $validated = $request->validate([
             'title' => 'required|string',
@@ -97,12 +97,12 @@ class AdProfileController extends Controller
 
         $card->update($validated);
 
-        return redirect()->route('adprofile.index')->with('success', 'Card berhasil diperbarui!');
+        return redirect()->route('adproduct.index')->with('success', 'Card berhasil diperbarui!');
     }
 
     public function destroy($id)
     {
-        $card = CardProfile::findOrFail($id);
+        $card = CardProduct::findOrFail($id);
 
         if ($card->image && Storage::disk('public')->exists($card->image)) {
             Storage::disk('public')->delete($card->image);
@@ -110,6 +110,6 @@ class AdProfileController extends Controller
 
         $card->delete();
 
-        return redirect()->route('adprofile.index')->with('success', 'Card berhasil dihapus!');
+        return redirect()->route('adproduct.index')->with('success', 'Card berhasil dihapus!');
     }
 }
