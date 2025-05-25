@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Card; // Pastikan ini model Card untuk welcome
+use App\Models\Card; // Model untuk adwelcome
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -27,7 +27,8 @@ class AdWelcomeController extends Controller
     public function create(Request $request)
     {
         $afterId = $request->query('after');
-        return view('ad_company.adwelcome.newcard', compact('afterId'));
+        $routePrefix = 'adwelcome'; // Untuk shared view agar route dinamis
+        return view('ad_company.shared.newcard', compact('afterId', 'routePrefix'));
     }
 
     public function store(Request $request)
@@ -70,7 +71,8 @@ class AdWelcomeController extends Controller
     public function edit($id)
     {
         $card = Card::findOrFail($id);
-        return view('ad_company.adwelcome.newcard', compact('card'));
+        $routePrefix = 'adwelcome';
+        return view('ad_company.shared.newcard', compact('card', 'routePrefix'));
     }
 
     public function update(Request $request, $id)

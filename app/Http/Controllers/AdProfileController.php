@@ -13,10 +13,8 @@ class AdProfileController extends Controller
         $query = CardProfile::query();
 
         if ($request->filled('search')) {
-            $query->where(function ($q) use ($request) {
-                $q->where('title', 'like', '%' . $request->search . '%')
+            $query->where('title', 'like', '%' . $request->search . '%')
                   ->orWhere('text', 'like', '%' . $request->search . '%');
-            });
         }
 
         $cards = $query->orderBy('position')->paginate(10);
@@ -27,7 +25,8 @@ class AdProfileController extends Controller
     public function create(Request $request)
     {
         $afterId = $request->query('after');
-        return view('ad_company.adprofile.newcard', compact('afterId'));
+        $routePrefix = 'adprofile'; // Untuk blade form agar route dinamis
+        return view('ad_company.shared.newcard', compact('afterId', 'routePrefix'));
     }
 
     public function store(Request $request)
@@ -70,7 +69,8 @@ class AdProfileController extends Controller
     public function edit($id)
     {
         $card = CardProfile::findOrFail($id);
-        return view('ad_company.adprofile.newcard', compact('card'));
+        $routePrefix = 'adprofile';
+        return view('ad_company.shared.newcard', compact('card', 'routePrefix'));
     }
 
     public function update(Request $request, $id)
