@@ -64,8 +64,8 @@
         </div>
 
         @if($image)
-            <div class="w-full md:w-1/2 flex justify-center" style="width: 100%; height: 400px; overflow: hidden;">
-                <img src="{{ $image }}" alt="Card Image" class="w-full h-full {{ $fitClass }} rounded-lg shadow-md" />
+            <div class="w-full md:w-1/2 flex justify-center" style="height: 400px; overflow: hidden;">
+                <img src="{{ $image }}" alt="Card Image" class="w-full h-full {{ $fitClass }} rounded-lg shadow-md object-center" />
             </div>
         @endif
     @endif

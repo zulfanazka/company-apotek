@@ -9,64 +9,22 @@
     {{-- Leaflet Map --}}
     <div id="map" class="max-w-5xl mx-auto h-[400px] rounded-lg shadow-md z-10"></div>
 
-
-
-    {{-- Form Tambah Lokasi --}}
-    {{-- <form action="{{ route('locations.store') }}" method="POST" style="margin-bottom: 20px;">
-        @csrf
-        <input type="text" name="name" placeholder="Nama Lokasi" required>
-        <input type="text" name="latitude" placeholder="Latitude" required>
-        <input type="text" name="longitude" placeholder="Longitude" required>
-        <button type="submit">Simpan</button>
-    </form> --}}
-
-    {{-- List Lokasi --}}
-    {{-- <ul>
-        @foreach ($locations as $location)
-            <li>
-                {{ $location->name }} ({{ $location->latitude }}, {{ $location->longitude }})
-                <a href="{{ route('locations.edit', $location->id) }}">Edit</a>
-                <form action="{{ route('locations.destroy', $location->id) }}" method="POST" style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit">Hapus</button>
-                </form>
-            </li>
-        @endforeach
-    </ul> --}}
-
-    {{-- tambah peta --}}
-    {{-- <a href="{{ route('locations.create') }}">tambah peta</a> --}}
-
-
-    <div class="max-w-5xl mx-auto my-6 flex justify-end">
-        <a href="{{ route('locations.create') }}"
-            class="inline-flex items-center px-5 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 transition duration-300">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
-                stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-            </svg>
-            Tambah Peta
-        </a>
-    </div>
-
     </br>
     <h2 class="text-3xl font-bold text-center text-blue-600 mb-10">Hubungi Kami</h2>
-
-
 
     {{-- Info Apotek --}}
     <div class="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 text-center mt-12">
         @foreach ($locations as $location)
-            <div class="bg-white p-4 rounded-lg shadow hover:shadow-lg transition duration-300">
+            <a href="{{ route('lihatbarang', ['location' => $location->id]) }}"
+               class="block bg-white p-4 rounded-lg shadow hover:shadow-lg transition duration-300 no-underline">
                 <h3 class="font-semibold text-gray-900 text-lg mb-2">{{ $location->name }}</h3>
-                <p class="text-sm text-gray-600 mb-4">Koordinat: {{ $location->latitude }}, {{ $location->longitude }}
-                </p>
+                <p class="text-sm text-gray-600 mb-4">Koordinat: {{ $location->latitude }}, {{ $location->longitude }}</p>
                 <div class="text-sm text-gray-700 space-y-2">
-                    <p><i class="fas fa-envelope text-blue-500 mr-2"></i>apotek@gmail.com</p>
-                    <p><i class="fas fa-phone text-blue-500 mr-2"></i>12345678910</p>
+                    <p><i class="fas fa-envelope text-blue-500 mr-2"></i>apotekrajawali@gmail.com</p>
+                    <p><i class="fas fa-phone text-blue-500 mr-2"></i>+62 345678910</p>
+                    <p><i class="fas fa-map-marker-alt text-blue-500 mr-2"></i>{{ $location->alamat }}</p> <!-- Added alamat -->
                 </div>
-            </div>
+            </a>
         @endforeach
     </div>
 </section>
@@ -87,17 +45,20 @@
     @foreach ($locations as $location)
         var marker = L.marker([{{ $location->latitude }}, {{ $location->longitude }}])
             .addTo(map)
-            .bindPopup("<strong>{{ $location->name }}</strong>");
+            .bindPopup(`
+                <strong>{{ $location->name }}</strong><br>
+                <span>{{ $location->alamat }}</span><br> <!-- Show alamat here -->
+                <a href="{{ route('lihatbarang', ['location' => $location->id]) }}" class="text-blue-600 underline hover:text-blue-800" target="_blank">Lihat Barang</a>
+            `);
         markers.push(marker.getLatLng());
     @endforeach
 
-if (markers.length > 0) {
-    map.fitBounds(markers);
-} else {
-    // Default ke Yogyakarta
-    map.setView([-7.7956, 110.3695], 12);
-}
-
+    if (markers.length > 0) {
+        map.fitBounds(markers);
+    } else {
+        // Default ke Yogyakarta
+        map.setView([-7.7956, 110.3695], 12);
+    }
 </script>
 
 @include('layout.footer')

@@ -13,6 +13,9 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AdWelcomeController;
 use App\Http\Controllers\AdProfileController;
 use App\Http\Controllers\AdProductController;
+use App\Http\Controllers\AdContactController;
+use App\Http\Controllers\LihatBarangController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -37,8 +40,21 @@ Route::get('/product', [ProductController::class, 'index'])->name('product');
 
 // Contact & Locations (CRUD lokasi pakai ContactController)
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
-Route::get('/locations/create', [ContactController::class, 'create'])->name('locations.create');
-Route::post('/locations', [ContactController::class, 'store'])->name('locations.store');
-Route::get('/locations/{location}/edit', [ContactController::class, 'edit'])->name('locations.edit');
-Route::put('/locations/{location}', [ContactController::class, 'update'])->name('locations.update');
-Route::delete('/locations/{location}', [ContactController::class, 'destroy'])->name('locations.destroy');
+// CRUD lokasi menggunakan AdContactController via route manual
+Route::get('/locations/create', [AdContactController::class, 'create'])->name('locations.create');
+Route::post('/locations', [AdContactController::class, 'store'])->name('locations.store');
+Route::get('locations/{location}/edit', [AdContactController::class, 'edit'])->name('locations.edit');
+Route::put('locations/{location}', [AdContactController::class, 'update'])->name('locations.update');
+Route::delete('/locations/{location}', [AdContactController::class, 'destroy'])->name('locations.destroy');
+
+// Resource route untuk adcontact
+Route::resource('adcontact', AdContactController::class);
+
+Route::get('/lihatbarang', function () {
+    return view('locations.lihatbarang');
+});
+
+// Lihat data di maps
+Route::get('/lihatbarang', [LihatBarangController::class, 'lihatbarang'])->name('lihatbarang');
+
+Route::resource('adcontact', AdContactController::class);

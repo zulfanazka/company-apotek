@@ -10,7 +10,8 @@ class Location extends Model
     protected $fillable = [
         'name',       // Kolom nama lokasi
         'latitude',   // Kolom latitude
-        'longitude',  // Kolom longitude
+        'longitude',
+        'alamat',  // Kolom longitude
     ];
 
     // Jika kamu ingin menambahkan validasi timestamp atau pengaturan lainnya, bisa diatur di sini

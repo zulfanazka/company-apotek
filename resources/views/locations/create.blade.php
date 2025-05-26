@@ -1,3 +1,6 @@
+@extends('layouts.main')
+
+@section('content')
 @include('layout.header')
 
 {{-- Leaflet CSS --}}
@@ -6,7 +9,7 @@
 <section class="bg-white py-12 px-6 min-h-screen flex flex-col items-center">
     <div class="max-w-6xl w-full flex flex-col md:flex-row gap-8 mb-12">
 
-        {{-- Form Input di Kiri --}}
+        {{-- Form Input Lokasi --}}
         <div class="md:w-1/2 bg-gray-50 p-8 rounded-lg shadow-md">
             <h2 class="text-2xl font-semibold mb-6 text-blue-600">Tambah Lokasi Baru</h2>
             <form action="{{ route('locations.store') }}" method="POST" class="space-y-6">
@@ -15,18 +18,27 @@
                 <div>
                     <label for="name" class="block mb-1 font-medium text-gray-700">Nama Lokasi</label>
                     <input type="text" name="name" id="name" placeholder="Masukkan nama lokasi" required
+                        value="{{ old('name') }}"
                         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div>
+                    <label for="alamat" class="block mb-1 font-medium text-gray-700">Alamat</label>
+                    <textarea name="alamat" id="alamat" placeholder="Masukkan alamat lengkap" rows="3"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">{{ old('alamat') }}</textarea>
                 </div>
 
                 <div>
                     <label for="latitude" class="block mb-1 font-medium text-gray-700">Latitude</label>
                     <input type="text" name="latitude" id="latitude" placeholder="Masukkan latitude" required
+                        value="{{ old('latitude') }}"
                         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
 
                 <div>
                     <label for="longitude" class="block mb-1 font-medium text-gray-700">Longitude</label>
                     <input type="text" name="longitude" id="longitude" placeholder="Masukkan longitude" required
+                        value="{{ old('longitude') }}"
                         class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
 
@@ -44,15 +56,15 @@
 
     </div>
 
-    {{-- List Lokasi di Bawah --}}
+    {{-- Daftar Lokasi di Bawah --}}
     <div class="max-w-6xl w-full">
         <h3 class="text-xl font-semibold text-gray-800 mb-4">Daftar Lokasi</h3>
         <ul class="space-y-4">
             @foreach ($locations as $location)
-                <li
-                    class="flex justify-between items-center bg-gray-100 p-4 rounded-md shadow-sm hover:shadow-md transition">
+                <li class="flex justify-between items-center bg-gray-100 p-4 rounded-md shadow-sm hover:shadow-md transition">
                     <div>
                         <strong class="text-blue-600">{{ $location->name }}</strong>
+                        <p class="text-sm text-gray-600">{{ $location->alamat }}</p>
                         <p class="text-sm text-gray-600">({{ $location->latitude }}, {{ $location->longitude }})</p>
                     </div>
                     <div class="flex gap-3">
@@ -92,7 +104,7 @@
     @foreach ($locations as $location)
         var marker = L.marker([{{ $location->latitude }}, {{ $location->longitude }}])
             .addTo(map)
-            .bindPopup("<strong>{{ $location->name }}</strong>");
+            .bindPopup("<strong>{{ $location->name }}</strong><br>{{ $location->alamat ?? '' }}");
         markers.push(marker.getLatLng());
     @endforeach
 
@@ -102,3 +114,4 @@
 </script>
 
 @include('layout.footer')
+@endsection

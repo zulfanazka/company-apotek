@@ -110,7 +110,7 @@
 
         <div class="mb-3">
             <label for="image" class="form-label">
-                Upload Gambar (jpg, png max 1MB)
+                Upload Gambar (jpg, png max 3MB)
                 @if(isset($card) && $card->image)
                     <br><small>Gambar saat ini:</small><br>
                     <img src="{{ asset('storage/' . $card->image) }}" alt="Current Image" class="rounded mb-2" style="max-width: 200px;">

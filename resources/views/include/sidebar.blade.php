@@ -143,7 +143,7 @@
     Product
 </a>
 
-<a href="{{ route('contact') }}" class="nav-link text-white {{ $currentRoute == 'contact' ? 'active' : '' }}">
+<a href="{{ route('adcontact.index') }}" class="nav-link text-white {{ $currentRoute == 'adcontact.index' ? 'active' : '' }}">
     <div class="sb-nav-link-icon text-white"><i class="fas fa-phone"></i></div>
     Contact
 </a>

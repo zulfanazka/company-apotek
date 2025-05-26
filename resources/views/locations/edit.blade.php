@@ -13,32 +13,65 @@
                 @csrf
                 @method('PUT')
 
+                {{-- Nama Lokasi --}}
                 <div>
                     <label for="name" class="block mb-2 font-semibold text-blue-700">Nama Lokasi</label>
-                    <input type="text" name="name" id="name" value="{{ old('name', $location->name) }}"
+                    <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        value="{{ old('name', $location->name) }}"
                         required
+                        placeholder="Masukkan nama lokasi"
                         class="w-full px-5 py-3 border-2 border-blue-300 rounded-md focus:outline-none focus:border-blue-600 transition"
-                        placeholder="Masukkan nama lokasi">
+                    >
                 </div>
 
+                {{-- Alamat --}}
+                <div>
+                    <label for="alamat" class="block mb-2 font-semibold text-blue-700">Alamat</label>
+                    <textarea
+                        name="alamat"
+                        id="alamat"
+                        rows="3"
+                        placeholder="Masukkan alamat lengkap"
+                        class="w-full px-5 py-3 border-2 border-blue-300 rounded-md focus:outline-none focus:border-blue-600 transition"
+                    >{{ old('alamat', $location->alamat) }}</textarea>
+                </div>
+
+                {{-- Latitude --}}
                 <div>
                     <label for="latitude" class="block mb-2 font-semibold text-blue-700">Latitude</label>
-                    <input type="text" name="latitude" id="latitude"
-                        value="{{ old('latitude', $location->latitude) }}" required
+                    <input
+                        type="text"
+                        name="latitude"
+                        id="latitude"
+                        value="{{ old('latitude', $location->latitude) }}"
+                        required
+                        placeholder="Masukkan latitude"
                         class="w-full px-5 py-3 border-2 border-blue-300 rounded-md focus:outline-none focus:border-blue-600 transition"
-                        placeholder="Masukkan latitude">
+                    >
                 </div>
 
+                {{-- Longitude --}}
                 <div>
                     <label for="longitude" class="block mb-2 font-semibold text-blue-700">Longitude</label>
-                    <input type="text" name="longitude" id="longitude"
-                        value="{{ old('longitude', $location->longitude) }}" required
+                    <input
+                        type="text"
+                        name="longitude"
+                        id="longitude"
+                        value="{{ old('longitude', $location->longitude) }}"
+                        required
+                        placeholder="Masukkan longitude"
                         class="w-full px-5 py-3 border-2 border-blue-300 rounded-md focus:outline-none focus:border-blue-600 transition"
-                        placeholder="Masukkan longitude">
+                    >
                 </div>
 
-                <button type="submit"
-                    class="w-full bg-blue-600 text-white py-3 rounded-md font-bold hover:bg-blue-700 transition">
+                {{-- Submit Button --}}
+                <button
+                    type="submit"
+                    class="w-full bg-blue-600 text-white py-3 rounded-md font-bold hover:bg-blue-700 transition"
+                >
                     Perbarui Lokasi
                 </button>
             </form>

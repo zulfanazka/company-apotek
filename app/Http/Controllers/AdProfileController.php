@@ -36,7 +36,7 @@ class AdProfileController extends Controller
             'text' => 'required|string',
             'layout' => 'required|in:text-left,text-right,text-only,image-only',
             'text_align' => 'required|in:left,center,right,justify',
-            'image' => 'nullable|image|max:1024',
+            'image' => 'nullable|image|max:3072',
             'after_id' => 'nullable|integer|exists:card_profile,id',
             'fit_mode' => 'required|in:cover,contain,original',
         ]);
@@ -81,7 +81,7 @@ class AdProfileController extends Controller
             'title' => 'required|string',
             'text' => 'required|string',
             'layout' => 'required|in:text-left,text-right,text-only,image-only',
-            'image' => 'nullable|image|max:1024',
+            'image' => 'nullable|image|max:3072',
             'text_align' => 'required|in:left,center,right,justify',
             'fit_mode' => 'required|in:cover,contain,original',
         ]);

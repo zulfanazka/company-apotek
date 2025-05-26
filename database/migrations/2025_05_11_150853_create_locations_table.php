@@ -15,10 +15,10 @@ return new class extends Migration {
             $table->string('name');
             $table->decimal('latitude', 10, 7);
             $table->decimal('longitude', 10, 7);
+            $table->string('alamat')->nullable(); // Tambahkan kolom alamat, nullable jika ingin boleh kosong
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.
