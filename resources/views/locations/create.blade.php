@@ -46,6 +46,13 @@
                     class="w-full py-3 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition">
                     Simpan Lokasi
                 </button>
+                <button 
+                onclick="window.history.back()" 
+                class="w-full py-3 bg-gray-300 text-gray-700 font-semibold rounded-md hover:bg-gray-400 transition"
+                type="button"
+                >
+                Kembali
+                </button>
             </form>
         </div>
 
@@ -111,7 +118,36 @@
     if (markers.length > 0) {
         map.fitBounds(markers);
     }
+
+    // Tambahkan variabel marker klik untuk bisa dihapus/dipindah
+    var clickMarker;
+
+    // Event listener klik peta
+    map.on('click', function(e) {
+        var lat = e.latlng.lat.toFixed(7);
+        var lng = e.latlng.lng.toFixed(7);
+
+        // Update input form
+        document.getElementById('latitude').value = lat;
+        document.getElementById('longitude').value = lng;
+
+        // Jika marker sebelumnya ada, hapus
+        if (clickMarker) {
+            map.removeLayer(clickMarker);
+        }
+
+        // Tambahkan marker baru di posisi klik
+        clickMarker = L.marker([lat, lng], { draggable: true }).addTo(map);
+
+        // Jika marker drag, update input juga
+        clickMarker.on('dragend', function(event) {
+            var position = event.target.getLatLng();
+            document.getElementById('latitude').value = position.lat.toFixed(7);
+            document.getElementById('longitude').value = position.lng.toFixed(7);
+        });
+    });
 </script>
+
 
 @include('layout.footer')
 @endsection

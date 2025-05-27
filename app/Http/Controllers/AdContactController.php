@@ -60,4 +60,35 @@ public function edit($id)
 
         return redirect()->route('adcontact.index')->with('success', 'Lokasi berhasil dihapus.');
     }
+
+public function exportGeoJSON()
+{
+    $locations = Location::all();
+
+    $features = $locations->map(function ($location) {
+        return [
+            'type' => 'Feature',
+            'geometry' => [
+                'type' => 'Point',
+                'coordinates' => [(float)$location->longitude, (float)$location->latitude],
+            ],
+            'properties' => [
+                'id' => $location->id,
+                'name' => $location->name,
+                'alamat' => $location->alamat,
+            ],
+        ];
+    })->toArray();
+
+    $geojson = [
+        'type' => 'FeatureCollection',
+        'features' => $features,
+    ];
+
+    return response()->json($geojson)
+        ->header('Content-Disposition', 'attachment; filename="locations.geojson"')
+        ->header('Content-Type', 'application/geo+json');
+}
+
+
 }

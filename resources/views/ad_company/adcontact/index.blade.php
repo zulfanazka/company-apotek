@@ -8,12 +8,18 @@
 
         <h1 class="text-4xl font-bold text-blue-600 text-center mb-12">Kelola Lokasi Apotek</h1>
 
-        <div class="flex justify-end mb-6">
-            <a href="{{ route('locations.create') }}" 
-               class="inline-flex items-center px-5 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition duration-300">
-                Tambah Lokasi Baru
-            </a>
-        </div>
+        <div class="flex justify-end mb-6 space-x-4">
+    <a href="{{ route('locations.create') }}" 
+       class="inline-flex items-center px-5 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition duration-300">
+        Tambah Lokasi Baru
+    </a>
+    <a href="{{ route('locations.export.geojson') }}" 
+       class="inline-flex items-center px-5 py-3 bg-green-600 text-white font-semibold rounded-lg shadow hover:bg-green-700 transition duration-300"
+       download="locations.geojson">
+        Export GeoJSON
+    </a>
+</div>
+
 
         <div class="space-y-6">
             @foreach ($locations as $location)

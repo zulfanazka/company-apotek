@@ -15,7 +15,7 @@ use App\Http\Controllers\AdProfileController;
 use App\Http\Controllers\AdProductController;
 use App\Http\Controllers\AdContactController;
 use App\Http\Controllers\LihatBarangController;
-
+use Faker\Provider\ar_JO\Address;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,7 +46,7 @@ Route::post('/locations', [AdContactController::class, 'store'])->name('location
 Route::get('locations/{location}/edit', [AdContactController::class, 'edit'])->name('locations.edit');
 Route::put('locations/{location}', [AdContactController::class, 'update'])->name('locations.update');
 Route::delete('/locations/{location}', [AdContactController::class, 'destroy'])->name('locations.destroy');
-
+Route::get('/locations/export/geojson', [AdContactController::class, 'exportGeoJSON'])->name('locations.export.geojson');
 // Resource route untuk adcontact
 Route::resource('adcontact', AdContactController::class);
 
