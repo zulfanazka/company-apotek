@@ -92,6 +92,18 @@
 
   var markerGroup = L.featureGroup().addTo(map);
 
+  // Buat array JS lokasi dari PHP Laravel
+  const lokasiData = [
+    @foreach ($locations as $location)
+      {
+        id: {{ $location->id }},
+        lat: {{ $location->latitude }},
+        lng: {{ $location->longitude }}
+      },
+    @endforeach
+  ];
+
+  // Tambahkan marker ke peta dan markerGroup
   @foreach ($locations as $location)
     L.marker([{{ $location->latitude }}, {{ $location->longitude }}])
       .bindPopup(`
@@ -211,6 +223,29 @@
       createMarker: function() { return null; }  // Jangan buat marker bawaan routing control
     }).addTo(map);
   });
+
+  // Event click pada card lokasi: zoom ke marker dan buka popup
+  document.querySelectorAll('.location-card').forEach(card => {
+    card.addEventListener('click', function(e) {
+      e.preventDefault();
+      const id = parseInt(this.dataset.id);
+      const lokasi = lokasiData.find(loc => loc.id === id);
+      if (!lokasi) return;
+
+      let targetMarker = null;
+      markerGroup.eachLayer(function(marker) {
+        if (marker.getLatLng().lat === lokasi.lat && marker.getLatLng().lng === lokasi.lng) {
+          targetMarker = marker;
+        }
+      });
+
+      if (targetMarker) {
+        map.setView(targetMarker.getLatLng(), 16, { animate: true });
+        targetMarker.openPopup();
+      }
+    });
+  });
 </script>
+
 
 @include('layout.footer')
